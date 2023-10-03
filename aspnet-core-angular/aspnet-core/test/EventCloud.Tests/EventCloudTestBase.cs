@@ -14,6 +14,7 @@ using EventCloud.EntityFrameworkCore;
 using EventCloud.EntityFrameworkCore.Seed.Host;
 using EventCloud.EntityFrameworkCore.Seed.Tenants;
 using EventCloud.MultiTenancy;
+using EventCloud.Tests.Data;
 
 namespace EventCloud.Tests
 {
@@ -27,6 +28,9 @@ namespace EventCloud.Tests
                 context.EventBus = NullEventBus.Instance;
                 context.SuppressAutoSetTenantId = true;
             }
+
+            //Seed initial data
+            UsingDbContext(context => new TestDataBuilder(context).Build());
 
             // Seed initial data for host
             AbpSession.TenantId = null;
